@@ -17,11 +17,19 @@ module.exports = {
         "corejs": 3 // 配置使用core-js使用的版本
       }
     ],
+    // "@babel/preset-env",
     "@babel/preset-react",
     "@babel/preset-typescript"
   ],
   "plugins": [
+    [
+      "import", {
+        "libraryName": "antd",
+        "libraryDirectory": "es",
+        "style": 'css'
+      }],
     isDEV && require.resolve('react-refresh/babel'), // 如果是开发模式,就启动react热更新插件
     // ...
+
   ].filter(Boolean) // 过滤空值
 }
