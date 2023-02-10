@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 
+import { Button, DatePicker } from 'antd';
+
+
 function App() {
   const [ count, setCounts ] = useState('')
   const onChange = (e: any) => {
@@ -13,6 +16,8 @@ function App() {
       <br />
       <p>非受控组件</p>
       <input type="text" />
+      <Button type='primary'>按钮</Button>
+      <DatePicker></DatePicker>
     </>
   )
 }
