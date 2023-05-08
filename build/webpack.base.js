@@ -2,7 +2,9 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
+const WebpackBar = require('webpackbar');
 const webpack = require('webpack')
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 module.exports = {
     // 入口文件
@@ -93,7 +95,34 @@ module.exports = {
         // 当前是打包模式,业务环境是开发环境,这里需要把process.env.BASE_ENV注入到业务代码里面,
         // 就可以通过该环境变量设置对应环境的接口地址和其他数据,要借助webpack.DefinePlugin插件
         new webpack.DefinePlugin({
-            'process.env.BASE_ENV': JSON.stringify(process.env.BASE_ENV)
+            'process.env': {
+                // 将属性转化为全局变量，让代码中可以正常访问
+                NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+                BASE_ENV: JSON.stringify(process.env.BASE_ENV)
+            }
+        }),
+        // 进度条插件
+        new WebpackBar({
+            name: 'BUILD',
+            color: "#85d", // 默认green，进度条颜色支持HEX
+            basic: false, // 默认true，启用一个简单的日志报告器
+            profile: false, // 默认false，启用探查器。
+        }),
+        // 打包成功输出日志
+        new FriendlyErrorsWebpackPlugin({
+            // 运行成功
+            compilationSuccessInfo: {
+                messages: ['🦄你的应用程序运行在: http://localhost:3000'],
+                notes: ['有些附加说明要在成功编辑时显示']
+            },
+            // 运行错误
+            onErrors: function (severity, errors) {
+                //您可以收听插件转换和优先级的错误
+                //严重性可以是'错误'或'警告'
+            },
+            //是否每次编译之间清除控制台
+            //默认为true
+            clearConsole: true,
         })
     ]
 
