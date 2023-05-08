@@ -1,12 +1,25 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
+
 import App from "./App";
+import { ConfigProvider } from "antd";
+
+import zhCN from "antd/es/locale/zh_CN";
+import moment from "moment";
+import { createRoot } from "react-dom/client";
 
 import { API_ENV_MAP } from "../config/constant";
 
+import "moment/locale/zh-cn";
+
+moment.locale("zh-cn");
+
 const root = document.getElementById("root");
 if (root) {
-  createRoot(root).render(<App />);
+  createRoot(root).render(
+    <ConfigProvider locale={zhCN}>
+      <App />
+    </ConfigProvider>
+  );
 }
 
 const { NODE_ENV, BASE_ENV } = process.env;
